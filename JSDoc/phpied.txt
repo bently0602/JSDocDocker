@@ -1,0 +1,108 @@
+Running JSDoc on Windows
+Motivation
+
+As your JavaScript grows bigger, it becomes harder to manage. A way to make it more manageable is by documenting properly what each function/method does, what type of parameters it accepts and what it returns. The laziest way do document is to use in-code comments in JavaDoc style and then to run a script to parse those comments and to produce nicely formatted documentation.
+
+Java-devs have JavaDoc and have been using it successfully for years. PHP has phpDoc which is also widely used for example by the PEAR project (example). Now JavaScript has the tool to use the same idea. The tool is JSDoc.
+
+What you need in order to use JSDoc?
+
+Perl - as the JSDoc tool is written in Perl
+CPAN - JSDoc requires some collection Perl libraries
+JSDoc - the tool itself
+Installing Perl
+
+To run Perl on Windows you need ActivePerl.
+
+Visit ActiveState's downloads page.
+Click "Download ActivePerl"
+(optionally) Provide your contact info
+Download the Windows package (currently ActivePerl-5.8.7.815-MSWin32-x86-211909.zip, 12.9MB)
+Uncompress the downloaded archive
+Make sure you have 80MBs of free space, run installer.bat and follow the instructions
+Point the installer to let's say C:\perl
+Answer "y" to the question "Add the Perl\bin directory to the PATH? [y]"
+(grab a coffee, the installer takes some time)
+At the end, in order to validate that all was installed OK and the path to Perl was set in your environment, open a console window (Start->Run->'cmd') and type (in any directory):
+
+perl -v
+This should print Perl version information. If it doesn't, you might need to restart your PC and/or set the path to Perl manually.
+
+CPAN
+
+Luckily, ActivePerl installs CPAN as well, together with the PPM utility (Perl Package Manager) that you can use to add/remove CPAN libraries. One library that JSDoc requires and doesn't come with the default ActivePerl install is HTML-Templates. To install it, open a console window and type:
+
+ppm
+The PPM prompt comes up.
+
+Type:
+
+PPM> install HTML-Template
+and finally, quit:
+
+PPM> q 
+JSDoc
+
+Download the latest JSDoc package and simply uncompress it somewhere, for example c:\JSDoc
+
+Ready, steady, go!
+
+JSDoc comes with an example script that shows you examples of how to use the syntax. To make sure all is installed and running smoothly, try to run the documentor tool on the test.js script.
+
+JSDoc is a command line tool and the most basic example is to navigate to the directory where you installed JSDoc (in my case - c:\JSDoc) and to type:
+
+perl jsdoc.pl test.js
+This will parse the comments in test.js script found in the same directory and will produce a bunch of html documents in folder c:\JSDoc\js_docs_out. You can load the index.html found in this directory to admire the result.
+
+Some options
+
+If you want to create the documentation in a different folder, use the -d option, like:
+
+perl jsdoc.pl test.js -d=c:\some\folder
+You can run JSDoc from any directory, let's say you're in c:\some\weird\place. You can still execute the documentor, feed it a script that's located anywhere and have the output documentation where you want it.
+
+perl c:\JSDoc\jsdoc.pl c:\JSdoc\test.js -d=c:\jsdoctest
+Executing with -h will give you hints about the other available options:
+
+perl c:\JSDoc\jsdoc.pl -h
+A note on syntax
+
+In order to feed the documentor you need to put comments in your code, before a method/function, like this:
+
+/**
+*
+*/
+Within the comments you put description and some tags. For example:
+
+/**
+* This is a function that calculates the length of a full name
+* based on given first and last names. The method is
+* not really implemented yet, but this is just a beta.
+* @param {string} first_name First name
+* @param {string} last_name Last name
+* @return {int} The number of letters in a name
+*/
+function getFullNameLength(first_name, last_name) {
+    //...
+}
+Here's the result documentation produced by JSDoc when parsing this simple function placed in a file.
+
+Some special tags
+
+In JavaScript there's no inheritance, but you can code to achieve the same result. In order for the JSDoc to show in the documentation that a class inherits another class, you put @extends.
+
+To define a method as a private method you use @private. Private methods are not included in the documentation unless you explicitly use -p option when running JSDoc.
+
+Example
+
+Finally, here's just a bit more elaborate example that uses classes:
+
+the code
+the documentation
+Conclusion
+
+Hope that helps to get you started with JSDoc. Any comments welcome 😀
+
+Tell your friends about this post on Facebook and Twitter
+
+Sorry, comments disabled and hidden due to excessive spam.
